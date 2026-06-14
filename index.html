@@ -1,22 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Havenly Homes — Find Your Next Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --clay: #E8743B;
+    --cream: #FBF6EF;
+    --forest: #2F4A3C;
+    --sand: #F0E4D3;
+    --ink: #2B2622;
+    --white: #FFFFFF;
+    --whatsapp: #25D366;
+  }
 
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Real Estate Landing Page</title>
-      <meta name="description" content="This real estate landing page allows users to easily book property inspections and chat via WhatsApp, providing a seamless and user-friendly experience." />
-      <meta name="robots" content="noindex, nofollow" />
-      <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
-      
-    </head>
+  *{margin:0;padding:0;box-sizing:border-box;}
 
-    <body>
-      
-      <div id="root"></div>
-      <script type="module" src="/src/main.tsx"></script>
-      
-    </body>
-  </html>
-  
+  html{scroll-behavior:smooth;}
+
+  body{
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    background:var(--cream);
+    line-height:1.6;
+  }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    line-height:1.1;
+  }
+
+  a{text-decoration:none;color:inherit;}
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* HEADER */
+  header{
+    position:sticky;
+    top:0;
+    background:rgba(251,246,239,0.92);
+    backdrop-filter:blur(8px);
+    z-index:100;
+    border-bottom:1px solid var(--sand);
+  }
+  .nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 24px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.4rem;
+    color:var(--forest);
+    letter-spacing:-0.5px;
+  }
+  .logo span{color:var(--clay);}
+  .nav-links{
+    display:flex;
+    gap:32px;
+    font-size:0.95rem;
+    font-weight:500;
+  }
+  .nav-cta{
+    display:flex;
+    gap:12px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 22px;
+    border-radius:100px;
+    font-weight:600;
+    font-size:0.92rem;
+    cursor:pointer;
+    border:none;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{
+    background:var(--clay);
+    color:var(--white);
+    box-shadow:0 4px 14px rgba(232,116,59,0.3);
+  }
+  .btn-whatsapp{
+    background:var(--whatsapp);
+    color:var(--white);
+    box-shadow:0 4px 14px rgba(37,211,102,0.3);
+  }
+  .btn-outline{
+    background:transparent;
+    border:1.5px solid var(--forest);
+    color:var(--forest);
+  }
+
+  .mobile-toggle{display:none;}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:100px 24px 140px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-200px;
+    right:-200px;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle, var(--sand) 0%, transparent 70%);
+    z-index:0;
+  }
+  .hero-inner{
+    max-width:1180px;
+    margin:0 auto;
+    position:relative;
+    z-index:1;
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:60px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-block;
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--forest);
+    background:var(--sand);
+    padding:7px 16px;
+    border-radius:100px;
+    margin-bottom:24px;
+    letter-spacing:0.02em;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 5vw, 4.2rem);
+    color:var(--ink);
+    margin-bottom:22px;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--clay);
+  }
+  .hero p{
+    font-size:1.1rem;
+    color:#5c5650;
+    max-width:480px;
+    margin-bottom:34px;
+  }
+  .hero-actions{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn-lg{
+    padding:15px 30px;
+    font-size:1rem;
+  }
+
+  /* Hero visual block */
+  .hero-visual{
+    position:relative;
+    height:480px;
+    border-radius:24px;
+    overflow:hidden;
+    background:var(--forest);
+  }
+  .hero-visual img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    opacity:0.9;
+  }
+  .hero-badge{
+    position:absolute;
+    bottom:24px;
+    left:24px;
+    right:24px;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(6px);
+    border-radius:16px;
+    padding:18px 22px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+  }
+  .hero-badge .stat{
+    font-family:'Fraunces', serif;
+    font-size:1.6rem;
+    font-weight:700;
+    color:var(--forest);
+  }
+  .hero-badge .stat-label{
+    font-size:0.78rem;
+    color:#7a746c;
+    margin-top:2px;
+  }
+  .hero-badge .divider{
+    width:1px;
+    height:40px;
+    background:var(--sand);
+  }
+
+  /* TRUST STRIP */
+  .trust{
+    padding:32px 24px;
+    border-top:1px solid var(--sand);
+    border-bottom:1px solid var(--sand);
+  }
+  .trust-inner{
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:24px;
+    text-align:center;
+  }
+  .trust-item .num{
+    font-family:'Fraunces', serif;
+    font-size:2rem;
+    font-weight:700;
+    color:var(--forest);
+  }
+  .trust-item .label{
+    font-size:0.85rem;
+    color:#7a746c;
+  }
+
+  /* LISTINGS */
+  .section{
+    padding:90px 24px;
+  }
+  .section-head{
+    text-align:center;
+    max-width:600px;
+    margin:0 auto 56px;
+  }
+  .section-head .eyebrow{margin-bottom:18px;}
+  .section-head h2{
+    font-size:clamp(2rem, 4vw, 2.8rem);
+    margin-bottom:14px;
+  }
+  .section-head p{color:#7a746c;}
+
+  .listings-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:28px;
+  }
+  .listing-card{
+    background:var(--white);
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid var(--sand);
+    transition:transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .listing-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 16px 32px rgba(43,38,34,0.08);
+  }
+  .listing-img{
+    height:200px;
+    overflow:hidden;
+  }
+  .listing-img img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .listing-body{padding:22px;}
+  .listing-tag{
+    font-size:0.75rem;
+    font-weight:600;
+    color:var(--clay);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:8px;
+  }
+  .listing-body h3{
+    font-size:1.25rem;
+    margin-bottom:6px;
+  }
+  .listing-loc{
+    font-size:0.9rem;
+    color:#9a948c;
+    margin-bottom:14px;
+  }
+  .listing-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-top:1px solid var(--sand);
+    padding-top:14px;
+  }
+  .listing-price{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--forest);
+  }
+  .listing-price span{
+    font-size:0.78rem;
+    font-weight:400;
+    color:#9a948c;
+    font-family:'Inter', sans-serif;
+  }
+  .listing-link{
+    font-size:0.85rem;
+    font-weight:600;
+    color:var(--clay);
+  }
+
+  /* INSPECTION + WHATSAPP SECTION */
+  .inspect{
+    background:var(--forest);
+    color:var(--cream);
+    border-radius:28px;
+    margin:0 24px;
+    padding:70px 24px;
+  }
+  .inspect-inner{
+    max-width:1180px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+    align-items:start;
+  }
+  .inspect-info .eyebrow{
+    background:rgba(232,116,59,0.18);
+    color:var(--clay);
+  }
+  .inspect-info h2{
+    font-size:clamp(1.9rem, 3.5vw, 2.6rem);
+    color:var(--white);
+    margin-bottom:16px;
+  }
+  .inspect-info p{
+    color:#cfd9d1;
+    margin-bottom:28px;
+    max-width:420px;
+  }
+  .inspect-perks{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    margin-bottom:36px;
+  }
+  .inspect-perks li{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:0.95rem;
+    color:#e6ece8;
+  }
+  .check{
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:var(--clay);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.75rem;
+    flex-shrink:0;
+  }
+  .whatsapp-box{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.12);
+    border-radius:16px;
+    padding:22px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .whatsapp-box p{
+    margin:0;
+    font-size:0.92rem;
+    color:#e6ece8;
+    flex:1;
+    min-width:160px;
+  }
+
+  /* FORM */
+  .form-card{
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:20px;
+    padding:36px;
+  }
+  .form-card h3{
+    font-size:1.4rem;
+    margin-bottom:6px;
+  }
+  .form-card .form-sub{
+    color:#7a746c;
+    font-size:0.9rem;
+    margin-bottom:24px;
+  }
+  .form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-bottom:14px;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .field.full{grid-column:1 / -1;}
+  .field label{
+    font-size:0.8rem;
+    font-weight:600;
+    color:var(--ink);
+  }
+  .field input,
+  .field select{
+    padding:12px 14px;
+    border-radius:10px;
+    border:1.5px solid var(--sand);
+    background:var(--white);
+    font-family:'Inter', sans-serif;
+    font-size:0.92rem;
+    color:var(--ink);
+    outline:none;
+    transition:border-color 0.15s ease;
+  }
+  .field input:focus,
+  .field select:focus{
+    border-color:var(--clay);
+  }
+  .form-card .btn{
+    width:100%;
+    justify-content:center;
+    margin-top:6px;
+    padding:14px;
+    font-size:1rem;
+  }
+  .form-note{
+    font-size:0.78rem;
+    color:#9a948c;
+    margin-top:14px;
+    text-align:center;
+  }
+
+  /* FOOTER */
+  footer{
+    padding:50px 24px 30px;
+    text-align:center;
+  }
+  footer .logo{
+    display:inline-block;
+    margin-bottom:12px;
+  }
+  footer p{
+    color:#9a948c;
+    font-size:0.88rem;
+  }
+
+  /* WHATSAPP FLOAT */
+  .wa-float{
+    position:fixed;
+    bottom:24px;
+    right:24px;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:var(--whatsapp);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 8px 20px rgba(37,211,102,0.4);
+    z-index:200;
+    transition:transform 0.15s ease;
+  }
+  .wa-float:hover{transform:scale(1.08);}
+  .wa-float svg{width:28px;height:28px;}
+
+  /* RESPONSIVE */
+  @media (max-width: 900px){
+    .hero-inner{grid-template-columns:1fr;gap:40px;}
+    .hero-visual{height:340px;order:-1;}
+    .listings-grid{grid-template-columns:repeat(2, 1fr);}
+    .inspect-inner{grid-template-columns:1fr;}
+    .nav-links{display:none;}
+  }
+
+  @media (max-width: 600px){
+    .nav-cta .btn-outline{display:none;}
+    .hero{padding:60px 20px 80px;}
+    .hero h1{font-size:2.2rem;}
+    .hero-actions{flex-direction:column;}
+    .hero-actions .btn{width:100%;justify-content:center;}
+    .listings-grid{grid-template-columns:1fr;}
+    .section{padding:60px 16px;}
+    .inspect{margin:0 12px;padding:50px 18px;border-radius:20px;}
+    .form-card{padding:24px;}
+    .form-row{grid-template-columns:1fr;}
+    .trust-inner{justify-content:space-between;}
+    .trust-item .num{font-size:1.5rem;}
+    .hero-badge{flex-direction:column;align-items:flex-start;gap:12px;}
+    .hero-badge .divider{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">Havenly<span>Homes</span></div>
+    <nav class="nav-links">
+      <a href="#listings">Listings</a>
+      <a href="#inspect">Book Inspection</a>
+      <a href="#about">Why Us</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#inspect" class="btn btn-outline">Book Inspection</a>
+      <a href="https://wa.me/2348000000000" target="_blank" class="btn btn-whatsapp">
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="eyebrow">Lagos &amp; Abuja Properties</span>
+      <h1>Find a home that <em>feels</em> like home</h1>
+      <p>Browse verified apartments, duplexes, and land across prime locations. Book a free inspection or chat with us directly on WhatsApp — no stress, no middlemen.</p>
+      <div class="hero-actions">
+        <a href="#inspect" class="btn btn-primary btn-lg">Book a Free Inspection</a>
+        <a href="https://wa.me/2348000000000" target="_blank" class="btn btn-whatsapp btn-lg">
+          Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=900&auto=format&fit=crop" alt="Modern home exterior">
+      <div class="hero-badge">
+        <div>
+          <div class="stat">500+</div>
+          <div class="stat-label">Homes listed</div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="stat">98%</div>
+          <div class="stat-label">Happy clients</div>
+        </div>
+        <div class="divider"></div>
+        <div>
+          <div class="stat">24hr</div>
+          <div class="stat-label">Response time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="num">12+</div>
+      <div class="label">Years in business</div>
+    </div>
+    <div class="trust-item">
+      <div class="num">30</div>
+      <div class="label">Active locations</div>
+    </div>
+    <div class="trust-item">
+      <div class="num">1,200</div>
+      <div class="label">Inspections booked</div>
+    </div>
+    <div class="trust-item">
+      <div class="num">4.9★</div>
+      <div class="label">Average rating</div>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="listings">
+  <div class="section-head">
+    <span class="eyebrow">Featured</span>
+    <h2>Homes worth seeing in person</h2>
+    <p>A few of our most-loved properties this month. Book an inspection to view any of these up close.</p>
+  </div>
+  <div class="container">
+    <div class="listings-grid">
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=600&auto=format&fit=crop" alt="Apartment exterior">
+        </div>
+        <div class="listing-body">
+          <div class="listing-tag">For Rent</div>
+          <h3>3-Bed Apartment</h3>
+          <div class="listing-loc">Lekki Phase 1, Lagos</div>
+          <div class="listing-meta">
+            <div class="listing-price">₦3.5m <span>/year</span></div>
+            <a href="#inspect" class="listing-link">Book Inspection →</a>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600&auto=format&fit=crop" alt="Modern duplex">
+        </div>
+        <div class="listing-body">
+          <div class="listing-tag">For Sale</div>
+          <h3>4-Bed Duplex</h3>
+          <div class="listing-loc">Ikate, Lagos</div>
+          <div class="listing-meta">
+            <div class="listing-price">₦95m <span>total</span></div>
+            <a href="#inspect" class="listing-link">Book Inspection →</a>
+          </div>
+        </div>
+      </div>
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=600&auto=format&fit=crop" alt="Studio apartment interior">
+        </div>
+        <div class="listing-body">
+          <div class="listing-tag">For Rent</div>
+          <h3>Studio Apartment</h3>
+          <div class="listing-loc">Yaba, Lagos</div>
+          <div class="listing-meta">
+            <div class="listing-price">₦1.2m <span>/year</span></div>
+            <a href="#inspect" class="listing-link">Book Inspection →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="inspect">
+  <div class="inspect">
+    <div class="inspect-inner">
+      <div class="inspect-info">
+        <span class="eyebrow">Book an Inspection</span>
+        <h2>See it before you decide</h2>
+        <p>Fill the form and our agent will confirm a date and time with you within a few hours. Or skip the form and message us directly on WhatsApp.</p>
+        <ul class="inspect-perks">
+          <li><span class="check">✓</span> Free, no-obligation visits</li>
+          <li><span class="check">✓</span> Verified properties only</li>
+          <li><span class="check">✓</span> Agent accompanies you on-site</li>
+          <li><span class="check">✓</span> Flexible weekday &amp; weekend slots</li>
+        </ul>
+        <div class="whatsapp-box">
+          <p>Prefer to chat? Send us a quick message and we'll respond fast.</p>
+          <a href="https://wa.me/2348000000000" target="_blank" class="btn btn-whatsapp">
+            Chat on WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="form-card">
+        <h3>Schedule your visit</h3>
+        <p class="form-sub">Takes less than a minute.</p>
+        <form id="inspectionForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="fname">Full name</label>
+              <input type="text" id="fname" name="fname" placeholder="e.g. Amaka Obi" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="080 000 0000" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field full">
+              <label for="property">Property of interest</label>
+              <select id="property" name="property">
+                <option>3-Bed Apartment — Lekki Phase 1</option>
+                <option>4-Bed Duplex — Ikate</option>
+                <option>Studio Apartment — Yaba</option>
+                <option>Other / Not sure yet</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="date">Preferred date</label>
+              <input type="date" id="date" name="date" required>
+            </div>
+            <div class="field">
+              <label for="time">Preferred time</label>
+              <input type="time" id="time" name="time" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Book Inspection</button>
+        </form>
+        <p class="form-note">By booking, you agree to be contacted by our team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="about">
+  <div class="logo">Havenly<span>Homes</span></div>
+  <p>© 2026 Havenly Homes. Helping families find homes across Nigeria.</p>
+</footer>
+
+<a href="https://wa.me/2348000000000" target="_blank" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16 0C7.163 0 0 7.163 0 16c0 2.86.76 5.54 2.08 7.86L0 32l8.32-2.06A15.9 15.9 0 0 0 16 32c8.837 0 16-7.163 16-16S24.837 0 16 0zm0 29.2c-2.6 0-5.02-.74-7.08-2.02l-.5-.31-4.94 1.22 1.26-4.8-.33-.5A13.16 13.16 0 0 1 2.8 16C2.8 8.7 8.7 2.8 16 2.8S29.2 8.7 29.2 16 23.3 29.2 16 29.2zm7.2-9.86c-.39-.2-2.32-1.15-2.68-1.28-.36-.13-.62-.2-.88.2-.26.39-1 1.28-1.23 1.54-.23.26-.45.29-.84.1-.39-.2-1.64-.6-3.12-1.93-1.15-1.03-1.93-2.3-2.16-2.69-.23-.39-.02-.6.18-.8.2-.2.46-.52.69-.78.23-.26.3-.45.46-.75.16-.3.08-.55-.05-.75-.13-.2-1.18-2.84-1.62-3.84-.39-.88-.79-.76-1.08-.78-.27-.02-.59-.02-.91-.02-.32 0-.84.12-1.27.59-.43.46-1.66 1.62-1.66 3.95s1.7 4.58 1.94 4.9c.23.32 3.25 4.96 7.88 6.76 4.63 1.8 4.63 1.2 5.46 1.13.84-.07 2.32-.95 2.65-1.87.33-.92.33-1.71.23-1.87-.1-.16-.36-.26-.75-.46z"/>
+  </svg>
+</a>
+
+<script>
+  document.getElementById('inspectionForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Thanks! We\'ve received your inspection request and will reach out shortly.');
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
